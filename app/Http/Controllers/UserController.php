@@ -107,10 +107,10 @@ class UserController extends Controller
             // Envía el correo electrónico con la contraseña al usuario
             Mail::to($request->email)->send(new ContactoMailable($pass, $user));
         } else {
-            return view("forgot")->with('error', 'Usuario no encontrado. Verifique el correo electrónico.');
+            return view("forgot")->with('error', 'User not found. Check the email.');
         }
 
-        return view("forgot")->with('success', 'Correo enviado. Por favor, compruebe su bandeja de entrada (revise spam).');;
+        return view("forgot")->with('success', 'Email sent. Check the inbox.');;
     }
 
     function logout()
