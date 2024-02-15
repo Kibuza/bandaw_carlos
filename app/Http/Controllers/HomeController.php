@@ -11,6 +11,7 @@ class HomeController extends Controller
     {
         $id = auth()->user()->id;
         $instruments = Instrument::where('band_id', $id)->get();
+        // dd($instruments);
         return view('home', compact('instruments')); //Aquí recojo la lista entera de instrumentos y se la paso a la vista con el nombre instrumentos
     }
 

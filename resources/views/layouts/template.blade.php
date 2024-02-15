@@ -15,11 +15,7 @@
     <div class="user">
         @if (auth()->user())
             <div class="user_img">
-                @if (auth()->user()->logo)
                     <img src="uploads/users/{{ auth()->user()->logo }}">
-                @else
-                    <img src="img/default.png">
-                @endif
             </div>
             <h3>Logged as {{ auth()->user()->name }}</h3>
         @endif
@@ -33,7 +29,7 @@
 
 </body>
 <footer>
-    <p>All rights reserved</p>
+    <div><p>All rights reserved</p></div>
 </footer>
 
 </html>

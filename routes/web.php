@@ -4,17 +4,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
 Route::get('/', HomeController::class)->name('home')->middleware('auth');
 Route::post('/', HomeController::class)->name('home')->middleware('auth');
 
@@ -32,7 +21,7 @@ Route::post('/register', [UserController::class, 'register'])->name('register');
 
 Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 
-// Route::get('modificar/{id}', [ClientsController::class, 'llenar_modificar'])->name('llenar_modificar');
-// // Route::get('modificar', [ClientsController::class, 'modificar'])->name('modificar');
-// Route::post('modificar', [ClientsController::class, 'modificar'])->name('modificar');
+Route::get('/remind', [UserController::class, 'remind_view'])->name('remind_pass');
+Route::post('/remind', [UserController::class, 'send_mail'])->name('remind_pass');
+
 

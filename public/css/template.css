@@ -174,8 +174,6 @@ input[type="submit"]:hover {
   color: red;
 }
 
-/* Añade cualquier otro estilo que desees */
-
 .search_form, .clean_form{
   display: flex;
   flex-direction: column;
@@ -190,6 +188,16 @@ input[type="submit"]:hover {
 }
 .clean_form input:hover{
   background-color: #a82b36;
+}
+
+footer{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #718385;
+  color: white;
+  font-weight: bolder;
+  height: 100px;
 }
 
 

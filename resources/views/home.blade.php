@@ -35,8 +35,8 @@
         </div>
 
         <div class="instrument_grid">
-            @if (empty($instruments))
-                <p>There are no instruments. Clean the filter.</p>
+            @if (empty($instruments) || !isset($instruments))
+                <p>There are no instruments. Add some or clean the filter.</p>
             @else
                 @foreach ($instruments as $item)
                     <div class="instrument_box">

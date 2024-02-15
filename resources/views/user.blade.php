@@ -17,7 +17,7 @@
 
 		<a href="{{route('register')}}">Not a member? Sign up now</a>
 
-		<a href="forgot_password.php">Did you forget your password?</a>
+		<a href="{{route('remind_pass')}}">Did you forget your password?</a>
 
 	</form>
 </body>

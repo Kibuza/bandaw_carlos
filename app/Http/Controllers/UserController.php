@@ -2,26 +2,32 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ContactoMailable;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
-    function __invoke(){}
+    function __invoke()
+    {
+    }
 
-    function login_view(){
+    function login_view()
+    {
         return view("user");
     }
 
-    function login(Request $request){
+    function login(Request $request)
+    {
 
         $credentials = $request->validate([
             'name' => ['required'],
             'password' => ['required']
         ]);
 
-        if(Auth::attempt($credentials)){
+        if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
             return redirect()->route('home');
@@ -32,17 +38,19 @@ class UserController extends Controller
         ])->onlyInput('password');
     }
 
-    function register_view(){
+    function register_view()
+    {
         return view("register");
     }
 
-    function register(Request $request){
+    function register(Request $request)
+    {
 
         $this->validate($request, [
             'bandname' => 'required|min:3|max:15',
             'email' => 'required|max:25|email|unique:users,email',
             'username' => 'required|min:5|max:15|unique:users,name',
-            'password' => 'required|min:6|confirmed',     
+            'password' => 'required|min:6|confirmed',
         ]);
 
         $file = $request->file('user_img');
@@ -66,18 +74,47 @@ class UserController extends Controller
         $password = $request->get('password');
 
         User::create([
-            'name'=>$username,
-            'bandname'=>$bandname,
-            'email'=>$email,
-            'password'=>$password,
-            'logo'=>$file_name
+            'name' => $username,
+            'bandname' => $bandname,
+            'email' => $email,
+            'password' => $password,
+            'logo' => $file_name
         ]);
 
         return redirect()->route('home');
 
     }
 
-    function logout(){
+    function remind_view()
+    {
+        return view("forgot");
+    }
+
+    function send_mail(Request $request)
+    {
+
+        $this->validate($request, [
+            'email' => 'required|max:25|email',
+        ]);
+
+        // Buscar al usuario por su correo electrónico
+        $usuario = User::where('email', $request->email)->first();
+
+        if ($usuario) {
+            // Si se encuentra el usuario, obtén su contraseña
+            $pass = $usuario->password;
+            $user = $usuario->name;
+            // Envía el correo electrónico con la contraseña al usuario
+            Mail::to($request->email)->send(new ContactoMailable($pass, $user));
+        } else {
+            return view("forgot")->with('error', 'Usuario no encontrado. Verifique el correo electrónico.');
+        }
+
+        return view("forgot")->with('success', 'Correo enviado. Por favor, compruebe su bandeja de entrada (revise spam).');;
+    }
+
+    function logout()
+    {
         auth()->logout();
         return redirect()->route('home');
     }
